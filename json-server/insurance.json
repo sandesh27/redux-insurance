@@ -1,7 +1,7 @@
 {
-	"policies": [],
-	"claims": [],
-	"amount": {
-	"bagOfMoney": 100
-	}
+  "policies": [],
+  "claims": [],
+  "amount": {
+    "bagOfMoney": 100
+  }
 }
