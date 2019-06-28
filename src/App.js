@@ -5,6 +5,7 @@ import Home from "./components/home/Home";
 import Policies from "./components/policies/Policies";
 import CreatePolicy from "./components/policies/CreatePolicy";
 import Claims from "./components/claims/Claims";
+import Login from "./components/auth/Login";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/policies" component={Policies} />
         <Route path="/policies/new" component={CreatePolicy} />
         <Route exact path="/claims" component={Claims} />

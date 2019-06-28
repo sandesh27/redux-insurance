@@ -12,7 +12,7 @@ const renderPoliciesData = (policies, deletePolicy) => {
         <td>
           <button
             className="ui button negative"
-            onClick={deletePolicy(policy.name)}
+            // onClick={deletePolicy(policy.name)}
           >
             Delete
           </button>
