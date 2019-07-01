@@ -1,14 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import Dashboard from "./Dashboard";
 
-const Navigation = () => {
+const renderAuthLinks = isLoggedIn => {
+  return isLoggedIn ? (
+    <NavLink className="item" to="/logout">
+      LogOut
+    </NavLink>
+  ) : (
+    <NavLink className="item" to="/login">
+      Login
+    </NavLink>
+  );
+};
+const Navigation = ({ isLoggedIn }) => {
   return (
     <div className="ui secondary  menu">
-      <NavLink to="/home" className="active item">
+      <NavLink exact to="/" className="item">
         Home
-      </NavLink>
-      <NavLink to="/login" className="item">
-        Login
       </NavLink>
       <NavLink to="/policies" className="item">
         Policies
@@ -16,8 +26,22 @@ const Navigation = () => {
       <NavLink to="/claims" className="item">
         Claims
       </NavLink>
+      <NavLink to="/about" className="item">
+        About Us
+      </NavLink>
+      <div className="right menu">
+        <div className="item">
+          <Dashboard />
+        </div>
+        <div className="ui item">{renderAuthLinks(isLoggedIn)}</div>
+      </div>
     </div>
   );
 };
 
-export default Navigation;
+const mapStateToProps = ({ auth }) => {
+  return {
+    isLoggedIn: auth.isLoggedIn
+  };
+};
+export default connect(mapStateToProps)(Navigation);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createPolicy } from "../../actions/policyActions";
+import { updateAccounts } from "../../actions/accountActions";
 
 class CreatePolicy extends Component {
   state = {
@@ -9,7 +10,7 @@ class CreatePolicy extends Component {
     premium: ""
   };
 
-  handelChange = e => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value
@@ -18,9 +19,13 @@ class CreatePolicy extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const name = `${this.state.firstName} ${this.state.lastName}`;
-    const amount = this.state.premium;
-    this.props.createPolicy(name, amount, new Date().toDateString());
+    this.props.createPolicy(
+      this.state.firstName + " " + this.state.lastName,
+      +this.state.premium,
+      new Date().toDateString()
+    );
+    this.props.updateAccounts(+this.state.premium);
+
     this.props.history.push("/policies");
   };
 
@@ -30,42 +35,44 @@ class CreatePolicy extends Component {
         <div className="field">
           <label>First Name</label>
           <input
-            type="text"
             value={this.state.firstName}
+            onChange={this.handleChange}
+            type="text"
             name="firstName"
             placeholder="First Name"
-            onChange={this.handelChange}
           />
         </div>
         <div className="field">
           <label>Last Name</label>
           <input
-            type="text"
             value={this.state.lastName}
+            onChange={this.handleChange}
+            type="text"
             name="lastName"
             placeholder="Last Name"
-            onChange={this.handelChange}
           />
         </div>
         <div className="field">
-          <label>Premium</label>
+          <label>Premium Paid</label>
           <input
-            type="text"
             value={this.state.premium}
+            onChange={this.handleChange}
+            type="text"
             name="premium"
-            placeholder="Premium"
-            onChange={this.handelChange}
+            placeholder="Premium Amount"
           />
         </div>
-        <button className="ui button positive" type="submit">
+        <button className="ui button blue" type="submit">
           Submit
         </button>
       </form>
     );
   }
 }
-
 export default connect(
   null,
-  { createPolicy }
+  {
+    createPolicy,
+    updateAccounts
+  }
 )(CreatePolicy);

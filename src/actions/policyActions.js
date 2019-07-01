@@ -1,23 +1,38 @@
-import { CREATE_POLICY, DELETE_POLICY } from "./actionTypes";
+import { CREATE_POLICY, DELETE_POLICY, FETCH_POLICIES } from "./actionTypes";
+import insuranceApi from "../api/insurance";
 
-//create a policy
-export const createPolicy = (name, amount, dateOfJoining) => {
-  return {
+export const createPolicy = (name, amount, dateOfJoining) => async dispatch => {
+  await insuranceApi.post("/policies", {
+    name: name,
+    premium: amount,
+    dateOfJoining: dateOfJoining
+  });
+  dispatch({
     type: CREATE_POLICY,
     payload: {
-      name,
+      name: name,
       premium: amount,
-      dateOfJoining
+      dateOfJoining: dateOfJoining
     }
-  };
+  });
 };
 
-//delete a policy
-export const deletePolicy = name => {
-  return {
+export const deletePolicy = id => async dispatch => {
+  await insuranceApi.delete(`/policies/${id}`);
+  dispatch({
     type: DELETE_POLICY,
     payload: {
-      name
+      id: id
     }
-  };
+  });
+};
+
+export const fetchPolicies = () => async dispatch => {
+  const response = await insuranceApi.get("/policies");
+  dispatch({
+    type: FETCH_POLICIES,
+    payload: {
+      policies: response.data
+    }
+  });
 };

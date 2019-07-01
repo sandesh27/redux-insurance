@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-// import { deletePolicy } from "../../actions/policyActions";
+import { deletePolicy } from "../../actions/policyActions";
 
-const renderPoliciesData = (policies, deletePolicy) => {
+const renderPolicies = (policies, deletePolicy) => {
   return policies.map(policy => {
     return (
-      <tr key={policy.name}>
+      <tr key={policy.id}>
         <td>{policy.name}</td>
         <td>{policy.premium}</td>
         <td>{policy.dateOfJoining}</td>
         <td>
           <button
-            className="ui button negative"
-            // onClick={deletePolicy(policy.name)}
+            onClick={() => deletePolicy(policy.id)}
+            className="ui button red"
+            type="submit"
           >
             Delete
           </button>
@@ -21,35 +22,40 @@ const renderPoliciesData = (policies, deletePolicy) => {
     );
   });
 };
-
-class PolicyList extends Component {
-  render() {
-    const { policies, deletePolicy } = this.props;
-    return (
-      <table className="ui celled table">
-        <thead>
-          <tr>
-            <th>Policy Holder Name</th>
-            <th>Premium</th>
-            <th>Active Since</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>{renderPoliciesData(policies, deletePolicy)}</tbody>
-      </table>
-    );
-  }
-}
-
-PolicyList.defaultProps = {
-  policies: []
+const PoilcyList = ({ policies, deletePolicy }) => {
+  return (
+    <table className="ui celled table">
+      <thead>
+        <tr>
+          <th>Policy Holder Name</th>
+          <th>Premium Paid</th>
+          <th>Active Since</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>{renderPolicies(policies, deletePolicy)}</tbody>
+    </table>
+  );
 };
 
-const mapStateToProps = ({ policies, deletePolicy }) => {
+PoilcyList.defaultProps = {
+  policies: [
+    {
+      name: "Vilas",
+      premium: 100,
+      dateOfJoining: "31-03-2019"
+    }
+  ]
+};
+
+const mapStateToProps = state => {
   return {
-    policies,
-    deletePolicy
+    policies: state.policies
   };
 };
-
-export default connect(mapStateToProps)(PolicyList);
+export default connect(
+  mapStateToProps,
+  {
+    deletePolicy
+  }
+)(PoilcyList);

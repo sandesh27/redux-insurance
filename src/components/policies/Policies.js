@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PolicyList from "./PolicyList";
+import PoilcyList from "./PolicyList";
+import withAuthentication from "../../withAuthentication";
 
 const Policies = ({ match }) => {
   return (
     <div>
-      <Link className="ui button blue" to={`${match.url}/new`}>
-        Create Policy
-      </Link>
-      <PolicyList policies={[]} />
+      <div>
+        <Link to={`${match.url}/new`} className="ui button positive">
+          Create Policy
+        </Link>
+      </div>
+      <PoilcyList />
     </div>
   );
 };
 
-export default Policies;
+export default withAuthentication(Policies);

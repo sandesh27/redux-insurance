@@ -1,12 +1,16 @@
-import { authenticateUser } from "../api/auth";
 import {
+  LOGIN_USER,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  LOGIN_IN_PROGRESS,
   LOGOUT_USER
 } from "./actionTypes";
+import { authenticateUser } from "../api/auth";
 
-const loginSuccess = token => {
+const loginInProgress = () => {
+  return { type: LOGIN_USER };
+};
+
+export const loginSuccess = token => {
   return {
     type: LOGIN_SUCCESS,
     payload: {
@@ -16,27 +20,17 @@ const loginSuccess = token => {
 };
 
 const loginFailed = () => {
-  return {
-    type: LOGIN_FAILED
-  };
+  return { type: LOGIN_FAILED };
 };
 
 const logoutUser = () => {
-  return {
-    type: LOGOUT_USER
-  };
+  return { type: LOGOUT_USER };
 };
 
-const loginInProgess = () => {
-  return {
-    type: LOGIN_IN_PROGRESS
-  };
-};
-
-export const loginUser = (username, password, cb) => async dispatch => {
-  dispatch(loginInProgess());
+export const LoginUser = (userid, password, cb) => async dispatch => {
+  dispatch(loginInProgress());
   try {
-    const response = await authenticateUser(username, password);
+    const response = await authenticateUser(userid, password);
     dispatch(loginSuccess(response));
     cb();
   } catch (err) {
@@ -44,7 +38,7 @@ export const loginUser = (username, password, cb) => async dispatch => {
   }
 };
 
-export const logOutUser = cb => dispatch => {
+export const LogoutUser = cb => dispatch => {
   dispatch(logoutUser());
   cb();
 };

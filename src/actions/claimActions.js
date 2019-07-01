@@ -1,12 +1,26 @@
-import { CREATE_CLAIM } from "./actionTypes";
+import { CREATE_CLAIM, FETCH_CLAIMS } from "./actionTypes";
+import insuranceApi from "../api/insurance";
 
-//create a claim
-export const createClaim = (name, claimAmount) => {
-  return {
+export const createClaim = (name, amountOfMoneyToCollect) => async dispatch => {
+  await insuranceApi.post("/claims", {
+    name: name,
+    amount: amountOfMoneyToCollect
+  });
+  dispatch({
     type: CREATE_CLAIM,
     payload: {
-      name,
-      claimAmount
+      name: name,
+      amount: amountOfMoneyToCollect
     }
-  };
+  });
+};
+
+export const fetchClaims = () => async dispatch => {
+  const response = await insuranceApi.get("/claims");
+  dispatch({
+    type: FETCH_CLAIMS,
+    payload: {
+      claims: response.data
+    }
+  });
 };

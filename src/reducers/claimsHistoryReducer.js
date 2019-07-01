@@ -1,9 +1,13 @@
-import { CREATE_CLAIM } from "../actions/actionTypes";
+import { CREATE_CLAIM, FETCH_CLAIMS } from "../actions/actionTypes";
 
-//claims reducer
-export const claimsHistoryReducer = (oldClaimsList = [], action) => {
+const claimsHistoryReducer = (oldListOfClaims = [], action) => {
   if (action.type === CREATE_CLAIM) {
-    return [...oldClaimsList, action.payload];
+    return [...oldListOfClaims, action.payload];
+  } else if (action.type === FETCH_CLAIMS) {
+    return [...oldListOfClaims, ...action.payload.claims];
   }
-  return oldClaimsList;
+
+  return oldListOfClaims;
 };
+
+export default claimsHistoryReducer;

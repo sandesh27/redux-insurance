@@ -1,7 +1,7 @@
 import {
-  LOGIN_IN_PROGRESS,
-  LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_USER,
   LOGOUT_USER
 } from "../actions/actionTypes";
 
@@ -13,7 +13,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_IN_PROGRESS:
+    case LOGIN_USER:
       localStorage.removeItem("token");
       return Object.assign({}, state, {
         isLoggedIn: false,
@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         isLoggedIn: false,
         loginInProgress: false,
-        loginError: "Invalid credentials"
+        loginError: "Invalid Credentials"
       });
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -34,15 +34,13 @@ export default (state = initialState, action) => {
         loginInProgress: false,
         loginError: ""
       });
-
     case LOGOUT_USER:
-      localStorage.removeItem("token");
+      localStorage.clear();
       return Object.assign({}, state, {
         isLoggedIn: false,
         loginInProgress: false,
         loginError: ""
       });
-
     default:
       return state;
   }

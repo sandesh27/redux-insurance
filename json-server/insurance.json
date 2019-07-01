@@ -1,7 +1,42 @@
 {
-  "policies": [],
-  "claims": [],
+  "policies": [
+    {
+      "name": "SANDESH MAGDUM",
+      "premium": 3000,
+      "dateOfJoining": "Mon Jul 01 2019",
+      "id": 1
+    },
+    {
+      "name": "Hitesh Dhake",
+      "premium": 1000,
+      "dateOfJoining": "Mon Jul 01 2019",
+      "id": 2
+    },
+    {
+      "name": "Vikas Jagdale",
+      "premium": 500,
+      "dateOfJoining": "Mon Jul 01 2019",
+      "id": 3
+    }
+  ],
+  "claims": [
+    {
+      "name": "SANDESH MAGDUM",
+      "amount": 300,
+      "id": 1
+    },
+    {
+      "name": "Hitesh Dhake",
+      "amount": 200,
+      "id": 2
+    },
+    {
+      "name": "Vikas Jagdale",
+      "amount": 100,
+      "id": 3
+    }
+  ],
   "amount": {
-    "bagOfMoney": 100
+    "bagOfMoney": 4000
   }
 }
